@@ -1,9 +1,11 @@
 import subprocess as sp
 import requests
 import threading
-import os
+import sys
 import time
 from colorama import Fore as COL
+
+print(COL.YELLOW + f"Token Scraper | by King Herod | Scraping tokens...")
 
 valid = open("valid.txt", "w")
 locked = open("locked.txt", "w")
@@ -36,6 +38,7 @@ def Check(auth):
     except:
         pass
 #find all tokens on computer
+m = 0
 output = sp.getoutput('find /home -name tokens.txt').splitlines()
 for path in output:
     for x in open(path, "r").read().splitlines():
@@ -47,6 +50,17 @@ for token in templist:
         pass
     else:
         res.append(token)
+        m += 1
+
+#ask if you want to check tokens or not
+print(COL.YELLOW + f"Token Scraper | by King Herod | Loaded {m} tokens")
+opt = input("Check tokens? (y/n): ")
+if opt not in("y", "Y"):
+    print(templist)
+    sys.exit()
+else:
+    pass
+
 #check if tokens are valid
 threads = []
 for token in res:
@@ -55,4 +69,4 @@ for token in res:
     threads.append(t)
 for t in threads:
     t.join()
-print(COL.GREEN + f"[+] Finished scraping | {tokencount} tokens loaded.")
+print(COL.GREEN + f"Finished scraping | {tokencount} tokens saved to valid.txt.")
