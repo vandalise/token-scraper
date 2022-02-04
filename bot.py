@@ -5,7 +5,8 @@ import os
 import time
 from colorama import Fore as COL
 
-
+valid = open("valid.txt", "w")
+locked = open("locked.txt", "w")
 tokencount = 0
 templist = []
 #token checker function
@@ -13,8 +14,6 @@ def Check(auth):
     global tokencount
     try:
         halfauth = auth[:len(auth)//2]
-        valid = open("valid.txt", "w")
-        locked = open("locked.txt", "w")
         x = requests.get('https://discord.com/api/v9/users/@me', headers={'Authorization': auth})
         if x.status_code == 200:
             y = requests.get('https://discord.com/api/v9/users/@me/affinities/users', headers={'Authorization': auth})
